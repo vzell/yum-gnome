@@ -16,6 +16,3 @@
   debug: 
     var: enable_gui.stdout_lines
   when: enable_gui is changed
-
-- name: Unconditionally reboot the machine to GUI mode
-  reboot:
