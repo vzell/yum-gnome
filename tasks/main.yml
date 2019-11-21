@@ -1,0 +1,20 @@
+---
+# tasks file for vzell.yum-gnome
+
+# https://support.oracle.com/epmos/faces/DocumentDisplay?id=2153562.1
+- name: Install the 'Gnome desktop' environment group
+  yum:
+    name: "@^Server with GUI"
+    disablerepo: ol7_latest
+    enablerepo: ol7_u5_base
+    state: present
+
+- name: Use systemctl command to enable GUI on system start
+  command: systemctl set-default graphical.target
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'
+  register: enable_gui
+
+- name: Debug enabling GUI on system start
+  debug: 
+    var: enable_gui.stdout_lines
+  when: enable_gui is changed
